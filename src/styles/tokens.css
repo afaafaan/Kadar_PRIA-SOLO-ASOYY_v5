@@ -1,0 +1,48 @@
+/* Design tokens (tampilan KADAR v3.2). Warna memakai light-dark(), dikendalikan oleh `color-scheme` di bawah. */
+:root {
+  color-scheme: light dark;
+
+  &:has(> head > meta[name="color-scheme"][content="dark"]) { color-scheme: dark; }
+  &:has(> head > meta[name="color-scheme"][content="light"]) { color-scheme: light; }
+
+  /* Palet dasar */
+  --paper: light-dark(#f5f9ff, #081626);
+  --surface: light-dark(#ffffff, #10243a);
+  --surface2: light-dark(#edf4ff, #142d48);
+  --ink: light-dark(#102c50, #e9f2ff);
+  --muted: light-dark(#6e8199, #9aadc3);
+  --line: light-dark(#dce7f5, #29425d);
+  --brand: light-dark(#1455a3, #79b5ff);
+  --blue2: light-dark(#5e9ff0, #83baff);
+  --on-brand: light-dark(#ffffff, #081626);
+  --orange: #f5a64a;
+  --shadow-c: light-dark(rgb(31 76 129 / 0.09), rgb(0 0 0 / 0.2));
+  --shadow: 0 20px 60px var(--shadow-c);
+
+  /* Skala AQI: satu-satunya tempat warna membawa arti */
+  --aqi-good: #39b98a;
+  --aqi-moderate: #e9a53d;
+  --aqi-usg: #f0894f;
+  --aqi-unhealthy: #e76f59;
+  --aqi-very: #b074d1;
+  --aqi-hazardous: #b4405f;
+
+  /* Efek liquid glass (navbar pill dan chip jam) */
+  --glass-a: light-dark(rgb(255 255 255 / 0.55), rgb(50 85 125 / 0.55));
+  --glass-b: light-dark(rgb(255 255 255 / 0.16), rgb(15 35 58 / 0.3));
+  --glass-border: light-dark(rgb(255 255 255 / 0.65), rgb(255 255 255 / 0.2));
+  --glass-hi: light-dark(rgb(255 255 255 / 0.95), rgb(255 255 255 / 0.28));
+  --glass-lo: light-dark(rgb(255 255 255 / 0.3), rgb(255 255 255 / 0));
+  --glass-shine: light-dark(rgb(255 255 255 / 0.75), rgb(255 255 255 / 0));
+  --glass-drop: light-dark(rgb(20 70 130 / 0.2), rgb(0 0 0 / 0.45));
+  --glass-hover: light-dark(rgb(255 255 255 / 0.5), rgb(255 255 255 / 0.12));
+  --glass-active: light-dark(rgb(255 255 255 / 0.8), rgb(255 255 255 / 0.2));
+  --glass-active-ink: light-dark(#1455a3, #ffffff);
+
+  /* Tipografi: DM Sans untuk isi, Manrope untuk judul */
+  --font: 'DM Sans', system-ui, sans-serif;
+  --font-head: 'Manrope', 'DM Sans', system-ui, sans-serif;
+
+  --radius: 12px;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}

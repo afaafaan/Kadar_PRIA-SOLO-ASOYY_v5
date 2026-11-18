@@ -1,0 +1,183 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  scroll-behavior: smooth;
+  scroll-padding-top: 92px;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Selama intro tampil, halaman tidak bisa di-scroll */
+:root[data-intro] body { overflow: hidden; }
+
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure { margin: 0; }
+h1, h2, h3, h4 { font-family: var(--font-head); }
+ul, ol { padding: 0; list-style: none; }
+
+a { color: inherit; text-decoration: none; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+svg { flex-shrink: 0; }
+
+:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 2px;
+}
+[tabindex="-1"]:focus { outline: none; }
+
+.sr-only:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(22px, 6vw, 92px);
+}
+
+/* Halaman fitur: ruang untuk navbar yang melayang */
+.page {
+  padding-top: 118px;
+  padding-bottom: 90px;
+  min-height: 70vh;
+}
+
+.num { font-variant-numeric: tabular-nums; }
+
+.live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #47b989;
+  margin-right: 7px;
+}
+
+/* Tombol: satu utama (biru), satu tenang (ghost) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  font: 700 12px/1.2 var(--font);
+  text-decoration: none;
+  transition: 0.2s;
+}
+.btn:hover { border-color: var(--orange); transform: translateY(-2px); }
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  gap: 28px;
+  padding: 16px 20px;
+  border: 0;
+  border-radius: 3px;
+  background: #1556a4;
+  color: #fff;
+  font-size: 11px;
+  box-shadow: 0 10px 24px rgb(21 86 164 / 0.2);
+  transition: 0.25s;
+}
+.btn-primary:hover { background: #0c3972; color: #fff; }
+.btn-primary::after {
+  content: '↗' / '';
+  font-size: 17px;
+  line-height: 1;
+  color: #ffbf70;
+  transition: transform 0.25s;
+}
+.btn-primary:hover::after { transform: translate(4px, -3px); }
+
+/* Efek ripple saat tombol utama diklik */
+.rip {
+  position: absolute;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.45);
+  transform: scale(0);
+  animation: rp 0.6s linear;
+  pointer-events: none;
+}
+@keyframes rp { to { transform: scale(4); opacity: 0; } }
+
+/* Muncul saat di-scroll (lihat <Reveal> di components/ui.jsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: 0.6s;
+}
+.reveal:where(.in) { opacity: 1; transform: none; }
+
+/* Toast (live region ada di lib/toast.jsx) */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  transform: translate(-50%, 30px);
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 13px;
+  text-align: center;
+  z-index: 3500;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+}
+.toast[data-open] { opacity: 1; transform: translate(-50%, 0); }
+.toast:empty { visibility: hidden; }
+
+@media (max-width: 700px) {
+  html { scroll-padding-top: 75px; }
+  .page { padding-top: 104px; padding-bottom: 70px; }
+  .toast { bottom: 70px; }
+}
+
+/* Pindah halaman: memudar sambil bergeser sedikit (React <ViewTransition>) */
+@keyframes page-in { from { opacity: 0; transform: translateY(8px); } }
+@keyframes page-out { to { opacity: 0; transform: translateY(-6px); } }
+::view-transition-old(*) { animation: page-out 220ms ease both; }
+::view-transition-new(*) { animation: page-in 320ms ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}

@@ -1,0 +1,115 @@
+/* ---------- Judul bagian ---------- */
+.sectionHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+.sectionHeading h1,
+.sectionHeading h2 {
+  margin: 17px 0 0;
+  font: 800 clamp(35px, 4.2vw, 55px) / 1.08 var(--font-head);
+  letter-spacing: -0.055em;
+}
+.sectionHeading em { font-style: normal; color: var(--blue2); }
+.sectionHeading > p {
+  max-width: 360px;
+  margin: 0 0 6px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.page { margin-bottom: 34px; }
+.page h1 { font-size: clamp(34px, 4.4vw, 58px); }
+
+.crumb { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.crumb a:hover { color: var(--brand); }
+
+@media (max-width: 700px) {
+  .sectionHeading { display: block; margin-bottom: 28px; }
+  .sectionHeading h1,
+  .sectionHeading h2 { font-size: 39px; }
+  .sectionHeading > p { margin-top: 16px; font-size: 11px; }
+}
+
+/* ---------- Label kecil ---------- */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 9px;
+  letter-spacing: 0.19em;
+  font-weight: 800;
+  color: var(--brand);
+}
+.eyebrow i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+.kicker {
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c);
+  flex: none;
+}
+
+/* ---------- Chip filter ---------- */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 8px 15px;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: var(--surface);
+  color: var(--ink);
+  font: 700 12px var(--font);
+  transition: 0.2s;
+}
+.chip:hover { border-color: var(--blue2); transform: translateY(-2px); }
+.chip[aria-pressed='true'] {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--on-brand);
+}
+
+/* ---------- Kartu saran / tips ---------- */
+.actGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+.act {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  transition: 0.25s;
+}
+.act:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.act b { display: block; font-size: 13px; }
+.act span { font-size: 12px; color: var(--muted); }
+.act em {
+  float: right;
+  padding: 3px 9px;
+  border-radius: 99px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 11px;
+}
+.ok { background: #e3f7ef; color: #1f8a63; }
+.mid { background: #fff2d9; color: #b07a1f; }
+.no { background: #ffebe5; color: #c8553d; }

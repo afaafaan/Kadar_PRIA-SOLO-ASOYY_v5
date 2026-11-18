@@ -1,0 +1,209 @@
+/* Baris filter: chip kategori + tombol lokasi */
+.filterRow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }
+
+/* Air Alert (muncul bila AQI > 100) */
+.alertBar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  border-left: 4px solid var(--orange);
+  border-radius: 8px;
+  background: #fff2d9;
+  color: #8a5a10;
+  font-size: 13px;
+}
+
+/* ---------- Peta + daftar kota ---------- */
+.layout { display: grid; grid-template-columns: 1.55fr 0.8fr; gap: 16px; }
+
+.mapPanel,
+.cityPanel {
+  min-width: 0;
+  padding: 23px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.panelTop { display: flex; justify-content: space-between; align-items: center; }
+.panelTop h2,
+.cityPanel h2 { margin: 6px 0 0; font: 800 19px var(--font-head); }
+
+.demoPill {
+  padding: 8px 11px;
+  border-radius: 30px;
+  background: #fff3df;
+  color: #cb842d;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+}
+.demoPill i {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #eea23f;
+}
+
+.map {
+  height: 520px;
+  margin-top: 18px;
+  border-radius: 10px;
+  background: #e4effb;
+  z-index: 1;
+  font-family: var(--font);
+}
+.map :global(.leaflet-control-attribution) { font-size: 8px !important; }
+/* Mode gelap: ubin peta digelapkan dengan filter */
+.dark :global(.leaflet-tile-pane) {
+  filter: brightness(0.7) contrast(1.1) saturate(0.7) hue-rotate(185deg) invert(0.9);
+}
+
+.markerSlot { background: none; border: 0; }
+.marker {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 2px 12px rgb(35 69 106 / 0.47);
+  color: #fff;
+  font: 800 11px / 1 var(--font-head);
+  cursor: pointer;
+  transition: scale 0.2s var(--ease-out);
+}
+.marker[data-selected] { scale: 1.18; outline: 3px solid var(--orange); outline-offset: 1px; }
+
+.legend { display: flex; align-items: center; gap: 16px; margin-top: 16px; font-size: 9px; color: var(--muted); }
+.legendDot { display: inline-block; width: 8px; height: 8px; margin-right: 5px; border-radius: 50%; }
+.lgGood { background: var(--aqi-good); }
+.lgModerate { background: var(--aqi-moderate); }
+.lgPoor { background: var(--aqi-unhealthy); }
+.hint { margin-left: auto; font-style: italic; }
+
+/* Daftar kota */
+.search {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 18px 0 10px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--muted);
+}
+.search:focus-within { outline: 3px solid var(--orange); outline-offset: 2px; }
+.search input {
+  width: 100%;
+  height: 38px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 11px;
+}
+
+.list { max-height: 350px; overflow: auto; }
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 3px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  transition: 0.25s;
+}
+.row:hover,
+.row[aria-pressed='true'] { background: var(--surface2); }
+.row:hover { transform: translateX(4px); }
+.rowName { display: block; flex: 1; font-size: 11px; font-weight: 700; }
+.rowName small { display: block; margin-top: 3px; font-size: 8px; font-weight: 400; color: var(--muted); }
+.rowAqi { font: 800 15px var(--font-head); }
+.rowState { width: 53px; font-size: 8px; text-align: right; color: var(--muted); }
+
+.empty { display: grid; gap: 12px; justify-items: start; padding: 12px 3px; font-size: 12px; color: var(--muted); }
+
+/* ---------- Kartu detail kota ---------- */
+.detail {
+  margin-top: 17px;
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.detailMain { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.location h2 { margin: 7px 0; font: 800 25px var(--font-head); }
+.location > span:last-child { font-size: 9px; color: var(--muted); }
+
+.score { display: flex; align-items: center; gap: 13px; }
+.score > strong { font: 800 53px var(--font-head); letter-spacing: -0.06em; font-variant-numeric: tabular-nums; }
+.scoreMeta { display: flex; flex-direction: column; gap: 4px; }
+.scoreMeta b { font-size: 10px; }
+.scoreMeta small { font-size: 8px; color: var(--muted); }
+
+.advice {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 15px;
+  padding: 17px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.adviceIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 17px;
+  flex: none;
+}
+.adviceIcon.good { background: #e3f7ef; color: #239b70; }
+.adviceIcon.moderate { background: #fff2d9; color: #c68a2c; }
+.adviceIcon.poor { background: #ffebe5; color: #d66b51; }
+.advice b { font-size: 11px; }
+.advice p { margin: 5px 0 0; font-size: 10px; line-height: 1.6; color: var(--muted); }
+
+.pollutants { display: grid; grid-template-columns: repeat(4, 1fr); padding-top: 18px; }
+.pollutants > div { padding-left: 17px; border-right: 1px solid var(--line); }
+.pollutants > div:first-child { padding-left: 0; }
+.pollutants > div:last-child { border: 0; }
+.pollutants dt { margin-bottom: 7px; font-size: 8px; letter-spacing: 0.12em; color: var(--muted); }
+.pollutants dd { font: 700 15px var(--font-head); font-variant-numeric: tabular-nums; }
+.pollutants small { font: 500 9px var(--font); color: var(--muted); }
+
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 20px; }
+
+/* ---------- Responsif ---------- */
+@media (max-width: 991px) {
+  .layout { grid-template-columns: 1fr; }
+  .cityPanel { order: 2; }
+  .list { display: grid; grid-template-columns: 1fr 1fr; column-gap: 12px; }
+}
+
+@media (max-width: 700px) {
+  .mapPanel,
+  .cityPanel { padding: 16px; }
+  .map { height: 380px; }
+  .rowState { display: none; }
+  .legend { flex-wrap: wrap; gap: 10px; }
+  .hint { width: 100%; margin-left: 0; }
+  .detail { padding: 18px; }
+  .location h2 { font-size: 21px; }
+  .score > strong { font-size: 43px; }
+  .pollutants { grid-template-columns: 1fr 1fr; row-gap: 17px; }
+  .pollutants > div:nth-child(3) { padding-left: 0; border: 0; }
+}

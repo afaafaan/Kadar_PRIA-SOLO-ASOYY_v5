@@ -1,0 +1,275 @@
+.skip {
+  position: absolute;
+  inset-inline-start: 16px;
+  inset-block-start: -100px;
+  z-index: 3600;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 6px;
+}
+.skip:focus { inset-block-start: 12px; }
+
+/* ---------- Navbar: pill melayang bergaya liquid glass ---------- */
+.header {
+  position: fixed;
+  top: 14px;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  width: min(1120px, calc(100% - 24px));
+  margin-inline: auto;
+  padding: 7px 10px 7px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--glass-a), var(--glass-b));
+  -webkit-backdrop-filter: blur(22px) saturate(190%);
+  backdrop-filter: blur(22px) saturate(190%);
+  box-shadow:
+    inset 0 1px 1px var(--glass-hi),
+    inset 0 -1px 1px var(--glass-lo),
+    0 12px 36px var(--glass-drop);
+}
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(120% 150% at 12% -40%, var(--glass-shine), transparent 55%);
+  pointer-events: none;
+}
+
+.headerInner {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  width: 128px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.nav { justify-self: center; }
+
+.menuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.menu {
+  /* Desktop: daftar biasa di dalam pill. Default popover (fixed, di tengah layar) dinetralkan. */
+  position: static;
+  inset: auto;
+  display: flex;
+  gap: 4px;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  overflow: visible;
+}
+.menuContact { display: none; }
+
+.link {
+  display: block;
+  padding: 9px 16px;
+  border-radius: 99px;
+  color: var(--muted);
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: 0.2s;
+}
+.link:hover { background: var(--glass-hover); color: var(--brand); }
+/* Halaman aktif: pill terang, bukan hanya warna */
+.link[aria-current='page'] {
+  background: var(--glass-active);
+  color: var(--glass-active-ink);
+  box-shadow: 0 2px 10px rgb(20 70 130 / 0.14), inset 0 1px 1px var(--glass-hi);
+}
+
+.actions { display: flex; align-items: center; gap: 18px; }
+
+.themeToggle {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
+  transition: 0.3s;
+}
+.themeToggle:hover { transform: rotate(25deg) scale(1.08); border-color: var(--orange); }
+
+.contact {
+  padding: 11px 16px;
+  border-radius: 99px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 11px;
+  font-weight: 700;
+  transition: 0.2s;
+}
+.contact span { margin-left: 10px; color: var(--orange); }
+.contact:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgb(16 44 80 / 0.25); }
+
+/* Tablet dan mobile: menu jadi popover native di bawah pill */
+@media (max-width: 62rem) {
+  .header { border-radius: 28px; padding: 8px 14px; }
+  .headerInner { display: flex; gap: 10px; }
+  .brand { margin-right: auto; }
+  .nav { order: 3; }
+  .actions { order: 2; }
+  .contact { display: none; }
+  .menuButton { display: inline-flex; }
+
+  .menu {
+    position: fixed;
+    inset: auto;
+    inset-block-start: 80px;
+    inset-inline-end: 12px;
+    display: block;
+    width: min(100% - 24px, 18rem);
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--surface) 94%, transparent);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 12px 36px var(--glass-drop);
+  }
+  .menu:not(:popover-open) { display: none; }
+  .menuContact { display: block; }
+  .menuContact .link { margin-top: 4px; background: var(--ink); color: var(--paper); }
+  .menuContact .link span { margin-left: 8px; color: var(--orange); }
+  .link { padding: 12px 16px; border-radius: 14px; }
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  padding: 50px 0 25px;
+  background: #0c2440;
+  color: #d7e6f7;
+}
+.footerMain {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 0.8fr;
+  gap: 40px;
+  padding-bottom: 38px;
+  border-bottom: 1px solid rgb(255 255 255 / 0.15);
+}
+.footerBrand { display: flex; flex-direction: column; gap: 10px; align-self: start; }
+.footerBrand span { font-size: 9px; color: #8da8c5; }
+.footerLogo {
+  width: 125px;
+  height: 65px;
+  object-position: left center;
+  filter: brightness(0) invert(1);
+}
+.footerNav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  align-content: start;
+}
+.footerNav a,
+.footerSocial a { font-size: 10px; color: #d5e5f7; }
+.footerNav a:hover,
+.footerSocial a:hover { color: #ffcc89; }
+.footerSocial { display: flex; flex-direction: column; gap: 12px; }
+.footerSocial span {
+  margin-bottom: 4px;
+  font-size: 8px;
+  letter-spacing: 0.13em;
+  color: #8da8c5;
+}
+.footerBottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 20px;
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  color: #8da8c5;
+}
+.disclaimer {
+  max-width: 900px;
+  margin: 17px 0 0;
+  font-size: 8px;
+  line-height: 1.7;
+  color: #7892ae;
+}
+
+@media (max-width: 700px) {
+  .footerMain { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .footerBrand { grid-column: span 2; }
+  .footerBottom { flex-direction: column; gap: 9px; }
+}
+
+/* ---------- Chip jam melayang ---------- */
+.clock {
+  position: fixed;
+  left: 14px;
+  bottom: 14px;
+  z-index: 1040;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 17px 9px 13px;
+  border: 1px solid var(--glass-border);
+  border-radius: 99px;
+  background: linear-gradient(135deg, var(--glass-a), var(--glass-b));
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: inset 0 1px 1px var(--glass-hi), 0 10px 28px var(--glass-drop);
+  color: var(--ink);
+  line-height: 1.25;
+}
+.clock strong { display: block; font: 800 15px var(--font-head); }
+.clock small { font-size: 10px; color: var(--muted); }
+
+@media (max-width: 700px) {
+  .clock { left: 10px; bottom: 10px; padding: 7px 13px 7px 10px; }
+  .clock strong { font-size: 13px; }
+  .clock small { font-size: 9px; }
+}
+
+/* ---------- Tombol kembali ke atas ---------- */
+.backTop {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: #1556a4;
+  color: #fff;
+  box-shadow: 0 8px 25px rgb(0 0 0 / 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s;
+}
+.backTop.show { opacity: 1; pointer-events: auto; }
